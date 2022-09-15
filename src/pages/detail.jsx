@@ -3,6 +3,7 @@ import {
   Text,
   TypographyStylesProvider,
   useMantineColorScheme,
+  useMantineTheme,
 } from '@mantine/core'
 import MainLayout from 'components/templates/MainLayout'
 import React, { useEffect, useState } from 'react'
@@ -15,6 +16,7 @@ const NoteDetailPage = () => {
   const navigate = useNavigate()
   const [noteDetail, setNoteDetail] = useState()
   const { colorScheme } = useMantineColorScheme()
+  const theme = useMantineTheme()
   useEffect(() => {
     if (!getNote(id)) {
       navigate('/404', { replace: true })
@@ -34,7 +36,7 @@ const NoteDetailPage = () => {
         <Box
           component="article"
           sx={{
-            backgroundColor: 'white',
+            backgroundColor: colorScheme === 'dark' ? theme.colors.dark[6] : 'white',
             padding: '18px',
             borderRadius: '8px',
           }}
