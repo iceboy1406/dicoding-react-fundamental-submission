@@ -1,4 +1,13 @@
-import { Button, Input, Modal, Text, TextInput } from '@mantine/core'
+import {
+  Box,
+  Button,
+  Input,
+  Modal,
+  Text,
+  TextInput,
+  useMantineColorScheme,
+  useMantineTheme,
+} from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { openConfirmModal } from '@mantine/modals'
 import { showNotification } from '@mantine/notifications'
@@ -17,6 +26,9 @@ import {
   getSearchedNotes,
 } from 'utils/localData'
 const HomePage = () => {
+  const { colorScheme } = useMantineColorScheme()
+  const theme = useMantineTheme()
+
   const [filteredNotes, setFilteredNotes] = useState(getActiveNotes())
   const { search, pathname } = useLocation()
   const [searchParams] = useSearchParams()
@@ -46,6 +58,13 @@ const HomePage = () => {
   })
   const [selectedNoteId, setSelectedNoteId] = useState()
 
+  const handleCloseCreateOrEditNoteModal = () => {
+    setCreateOrEditModalOpened(false)
+    setTitle('')
+    setBody('')
+    setSelectedNoteId(undefined)
+    setIsFormValid({ body: false, title: false })
+  }
   return (
     <MainLayout
       isArchived={false}
@@ -139,16 +158,11 @@ const HomePage = () => {
       </NoteList>
       <Modal
         opened={createOrEditNoteModalOpened}
-        onClose={() => {
-          setCreateOrEditModalOpened(false)
-          setTitle('')
-          setBody('')
-          setSelectedNoteId(undefined)
-          setIsFormValid({ body: false, title: false })
-        }}
+        onClose={() => handleCloseCreateOrEditNoteModal()}
         title={selectedNoteId ? 'Edit Note' : 'Create New Note'}
         fullScreen={isMobile}
         size="lg"
+        overflow="inside"
       >
         <TextInput
           label="Title"
@@ -199,35 +213,45 @@ const HomePage = () => {
             }}
           />
         </Input.Wrapper>
-        <Button
-          fullWidth
-          disabled={!(isFormValid.body && isFormValid.title)}
-          onClick={() => {
-            if (selectedNoteId) {
-              editNote({ id: selectedNoteId, title, body })
-              showNotification({
-                title: 'Success Edit Note',
-                message: 'Note edited successfully',
-                color: 'teal',
-              })
-            } else {
-              addNote({
-                body,
-                title,
-              })
-              showNotification({
-                title: 'Success Create Note',
-                message: 'Note created successfully',
-                color: 'teal',
-              })
-            }
-
-            updateFilteredNotes()
-            setCreateOrEditModalOpened(false)
+        <Box
+          sx={{
+            position: 'sticky',
+            bottom: '0px',
+            left: '0px',
+            paddingTop: '8px',
+            backgroundColor: colorScheme === 'dark' ? theme.colors.dark[7] : 'white',
           }}
         >
-          Submit
-        </Button>
+          <Button
+            fullWidth
+            disabled={!(isFormValid.body && isFormValid.title)}
+            onClick={() => {
+              if (selectedNoteId) {
+                editNote({ id: selectedNoteId, title, body })
+                showNotification({
+                  title: 'Success Edit Note',
+                  message: 'Note edited successfully',
+                  color: 'teal',
+                })
+              } else {
+                addNote({
+                  body,
+                  title,
+                })
+                showNotification({
+                  title: 'Success Create Note',
+                  message: 'Note created successfully',
+                  color: 'teal',
+                })
+              }
+
+              updateFilteredNotes()
+              handleCloseCreateOrEditNoteModal()
+            }}
+          >
+            Submit
+          </Button>
+        </Box>
       </Modal>
     </MainLayout>
   )
