@@ -47,14 +47,14 @@ const ArchivePage = () => {
     } else {
       navigate(`/archive?keyword=${searchValue}`)
     }
-  }, [searchValue, navigate])
+  }, [searchValue])
   useEffect(() => {
     if (searchKeyword) {
       setSearchValue(searchKeyword)
     } else {
       setSearchValue('')
     }
-  }, [searchKeyword])
+  }, [])
   return (
     <>
       <Box
