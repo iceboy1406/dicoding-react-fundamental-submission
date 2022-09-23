@@ -12,7 +12,6 @@ import { FiSearch } from 'react-icons/fi'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 const ArchivePage = () => {
-  const { colorScheme } = useColorScheme()
   const {
     pages: { archivedNotes: localization },
     components: {
@@ -36,7 +35,7 @@ const ArchivePage = () => {
     if (isSuccess) {
       if (!searchKeyword) return noteData.data
       return noteData.data.filter((note) =>
-        note.title.toLowerCase().includes(searchKeyword)
+        note.title.toLowerCase().includes(searchKeyword.toLowerCase())
       )
     }
     return []

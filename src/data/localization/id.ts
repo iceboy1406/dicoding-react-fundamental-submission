@@ -106,7 +106,7 @@ const idLocalization = {
         },
       },
       previewButton: {
-        tooltip: 'Go to Note Detail',
+        tooltip: 'Pergi ke detail catatan',
       },
     },
     searchNote: {

@@ -84,7 +84,7 @@ const HomePage = () => {
     if (isSuccess) {
       if (!searchKeyword) return noteData.data
       return noteData.data.filter((note) =>
-        note.title.toLowerCase().includes(searchKeyword)
+        note.title.toLowerCase().includes(searchKeyword.toLowerCase())
       )
     }
     return []

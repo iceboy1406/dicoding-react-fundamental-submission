@@ -214,7 +214,7 @@ const NoteCard: React.FC<Props> = ({
                     cancel:
                       localization.unarchiveButton.confirmModal.button.cancel.text,
                   },
-                  confirmProps: { color: 'red' },
+                  confirmProps: { color: 'indigo' },
                   onConfirm: () => unarchiveNoteMutation.mutate({ id }),
                 })
               }}
@@ -245,7 +245,7 @@ const NoteCard: React.FC<Props> = ({
                     cancel:
                       localization.archiveButton.confirmModal.button.cancel.text,
                   },
-                  confirmProps: { color: 'red' },
+                  confirmProps: { color: 'indigo' },
                   onConfirm: () => archiveNoteMutation.mutate({ id }),
                 })
               }}
