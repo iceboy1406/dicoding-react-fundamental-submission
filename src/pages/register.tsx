@@ -51,7 +51,6 @@ const RegisterPage = () => {
   const registerMutation = useMutation(AuthApi.register, {
     onError: (error) => {
       if (isAxiosError<ApiResponse>(error)) {
-        console.log(typeof error)
         if (error.response) {
           const {
             response: {

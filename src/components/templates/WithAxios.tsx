@@ -3,8 +3,6 @@ import Token from 'api/token'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { showNotification } from '@mantine/notifications'
-import useLocalization from 'hooks/useLocalization'
 import { AxiosError } from 'axios'
 
 interface Props {
@@ -12,8 +10,6 @@ interface Props {
 }
 const WithAxios: React.FC<Props> = ({ children }) => {
   const navigate = useNavigate()
-  const { unAuthorizedNotification } = useLocalization()
-
   useEffect(() => {
     const token = Token.getToken()
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
@@ -24,14 +20,8 @@ const WithAxios: React.FC<Props> = ({ children }) => {
           navigate('/auth/login', { replace: true })
           Token.removeToken()
           axios.defaults.headers.common['Authorization'] = ''
-          showNotification({
-            title: unAuthorizedNotification.title,
-            message: unAuthorizedNotification.message,
-            color: 'red',
-          })
-        } else {
-          return Promise.reject(error)
         }
+        return Promise.reject(error)
       }
     )
   }, [])

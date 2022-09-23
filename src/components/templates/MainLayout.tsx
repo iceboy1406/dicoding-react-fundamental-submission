@@ -8,7 +8,10 @@ import UserApi from 'api/services/user'
 const MainLayout: React.FC = () => {
   const theme = useMantineTheme()
   const { colorScheme } = useColorScheme()
-  const { isSuccess, data } = useQuery(['User'], UserApi.getAuthenticatedUser)
+  const { data, isSuccess } = useQuery(
+    ['User'],
+    UserApi.getAuthenticatedUser
+  )
   return (
     <Box
       sx={{
@@ -34,7 +37,7 @@ const MainLayout: React.FC = () => {
       >
         {isSuccess && (
           <>
-            <Header isAuthenticated={true} username={data.data.name} />
+            <Header isAuthenticated={true} username={data.name} />
             <main>
               <Outlet />
             </main>
