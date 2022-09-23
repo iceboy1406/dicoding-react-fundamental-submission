@@ -216,7 +216,6 @@ const HomePage = () => {
                 localization.createNewNoteModal.form.body.validation.required,
               validate: {
                 required: (value) => {
-                  console.log(value, errors)
                   return (
                     getTextContentLength(value) > 0 ||
                     localization.createNewNoteModal.form.body.validation
