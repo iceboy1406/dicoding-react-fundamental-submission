@@ -41,7 +41,7 @@ const HomePage = () => {
     data: noteData,
     isSuccess,
     isFetching,
-    isFetchedAfterMount
+    isFetchedAfterMount,
   } = useQuery(['Notes'], NoteApi.getActiveNotes)
   const createNoteMutation = useMutation(NoteApi.createNote, {
     onSuccess: () => {
@@ -95,14 +95,14 @@ const HomePage = () => {
     } else {
       navigate(`/?keyword=${searchValue}`)
     }
-  }, [searchValue, navigate])
+  }, [searchValue])
   useEffect(() => {
     if (searchKeyword) {
       setSearchValue(searchKeyword)
     } else {
       setSearchValue('')
     }
-  }, [searchKeyword])
+  }, [])
   return (
     <>
       <BreadCrumbs
